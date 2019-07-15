@@ -289,8 +289,10 @@ static int handle_options(int argc, char *argv[])
         fprintf(stderr, " }\n");
 
       for (int i = 0; i < input.len; ++i) {
-        if (TARGETS[i] != 0x00)
-          fprintf(stderr, "TARGETS[%d]: 0x%02x\n", i, TARGETS[i]);
+        if (TARGETS[i] != 0x00) {
+          fprintf(stderr, "TARGETS[%d]: 0x%02x ^ 0x%02x => 0x%02x\n", i, input.msg[i], TARGETS[i] , TARGETS[i] ^ input.msg[i]);
+          TARGETS[i] ^= input.msg[i];
+        }
       }
     }
 
