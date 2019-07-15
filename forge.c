@@ -1,6 +1,13 @@
 #include "forge.h"
 
-#define FLIP_BIT(msg, idx) ((msg)[(idx)/8] ^= 1 << ((idx) % 8))
+#define FLIP_BIT(msg, idx) \
+  do {\
+    u8 val = TARGETS[(idx) / 8] != 0x00 ? TARGETS[(idx) / 8] : 1 << ((idx) % 8);\
+    if (DEBUG)\
+      fprintf(stderr, "FLIP: msg[%d / 8 = %d] ^= 0x%02x\n", (idx), (idx)/8, val);\
+    (msg)[(idx)/8] ^= val;\
+  } while (0)
+
 int forge(const u8 *msg, size_t length, const struct bigint *checksum,
           void (*H)(const u8 *msg, size_t length, struct bigint *out),
           size_t bits[], size_t bits_size, u8 *buf)
