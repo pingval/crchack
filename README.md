@@ -1,3 +1,7 @@
+- changed 3rd argument of `-b` option from `start:end:step` to `start:end:*target_hex*`.
+
+----
+
 **crchack** is a public domain tool to force CRC checksums to arbitrarily chosen
 values. The main advantage over existing CRC alteration tools is the ability to
 obtain the desired checksum by changing non-contiguous input bits. crchack
