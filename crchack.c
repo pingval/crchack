@@ -13,6 +13,8 @@
 #include "crc.h"
 #include "forge.h"
 
+u8 TARGETS[TARGETS_SIZE] ={ 0 };
+
 /**
  * Usage.
  */
@@ -285,6 +287,11 @@ static int handle_options(int argc, char *argv[])
         for (i = 0; i < input.nbits; i++)
             fprintf(stderr, &", %zu.%zu"[!i], input.bits[i]/8, input.bits[i]%8);
         fprintf(stderr, " }\n");
+
+      for (int i = 0; i < input.len; ++i) {
+        if (TARGETS[i] != 0x00)
+          fprintf(stderr, "TARGETS[%d]: 0x%02x\n", i, TARGETS[i]);
+      }
     }
 
     return 0;
@@ -425,8 +432,17 @@ static int parse_slice(const char *p, struct slice *slice)
 
     /* l:r:S */
     if (!peek(&p)) return 1;
-    if (*p != ':' && !(p = parse_slice_offset(p, &slice->s)))
-        return 0;
+
+  u8 target;
+  sscanf(p, "%x", &target);
+
+  if (DEBUG)
+    fprintf(stderr, "-b %d:%d:0x%02x\n", slice->l, slice->r, target);
+
+  for (int i = slice->l / 8; i < slice->r / 8; ++i) {
+    TARGETS[i] = target;
+  }
+  return 1;
 
     if (peek(&p)) {
         fprintf(stderr, "junk '%s' after slice\n", p);
