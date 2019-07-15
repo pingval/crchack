@@ -1,4 +1,4 @@
-- changed 3rd argument of `-b` option from `start:end:step` to `start:end:*target_hex*`.
+- changed the 3rd argument of `-b` option from `start:end:step` to `start:end:*target_hex*`.
 
 ----
 
