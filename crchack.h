@@ -11,6 +11,6 @@ typedef uint8_t u8;
 // #define TARGETS_SIZE (0x2000 * 16) // PlayStation MemoryCard size
 #define TARGETS_SIZE (1024 * 1024 * 10) // 10 MB
 
-extern u8 TARGETS[TARGETS_SIZE];
+extern long TARGETS[TARGETS_SIZE];
 
 #endif
