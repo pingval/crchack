@@ -8,9 +8,9 @@ typedef uint16_t u16;
 typedef uint8_t u8;
 
 #define DEBUG 0
-// #define TARGETS_SIZE (0x2000 * 16) // PlayStation MemoryCard size
-#define TARGETS_SIZE (1024 * 1024 * 10) // 10 MB
+// #define FLIP_TABLE_SIZE (0x2000 * 16) // PlayStation MemoryCard size
+#define FLIP_TABLE_SIZE (1024 * 1024 * 10) // 10 MB
 
-extern long TARGETS[TARGETS_SIZE];
+extern long FLIP_TABLE[FLIP_TABLE_SIZE];
 
 #endif

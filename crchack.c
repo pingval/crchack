@@ -13,8 +13,7 @@
 #include "crc.h"
 #include "forge.h"
 
-// stupid name?
-long TARGETS[TARGETS_SIZE];
+long FLIP_TABLE[FLIP_TABLE_SIZE];
 
 /**
  * Usage.
@@ -97,7 +96,7 @@ static int handle_options(int argc, char *argv[])
     reflect_in = reflect_out = 0;
     memset(&input, 0, sizeof(input));
 
-  memset(&TARGETS, -1, sizeof(TARGETS));
+  memset(&FLIP_TABLE, -1, sizeof(FLIP_TABLE));
 
     /* Parse command options */
     while ((c = getopt(argc, argv, "hvp:w:i:x:rRo:O:b:")) != -1) {
@@ -289,14 +288,14 @@ static int handle_options(int argc, char *argv[])
         fprintf(stderr, " }\n");
 
       for (int i = 0; i < input.len; ++i) {
-        if (TARGETS[i] != -1) {
-          fprintf(stderr, "TARGETS[%d]: 0x%02x ^ 0x%02x => 0x%02x\n", i, input.msg[i], TARGETS[i] , TARGETS[i] ^ input.msg[i]);
+        if (FLIP_TABLE[i] != -1) {
+          fprintf(stderr, "FLIP_TABLE[%d]: 0x%02x ^ 0x%02x => 0x%02x\n", i, input.msg[i], FLIP_TABLE[i] , FLIP_TABLE[i] ^ input.msg[i]);
         }
       }
     }
   for (int i = 0; i < input.len; ++i) {
-    if (TARGETS[i] != -1) {
-      TARGETS[i] ^= input.msg[i];
+    if (FLIP_TABLE[i] != -1) {
+      FLIP_TABLE[i] ^= input.msg[i];
     }
   }
 
@@ -574,7 +573,7 @@ static int parse_slice(const char *p, struct slice *slice)
     fprintf(stderr, "-b %d:%d:0x%02x\n", slice->l, slice->r, target);
 
   for (int i = slice->l / 8; i < slice->r / 8; ++i) {
-    TARGETS[i] = target;
+    FLIP_TABLE[i] = target;
   }
   return 1;
 
